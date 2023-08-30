@@ -14,6 +14,77 @@ model User {
   image          String?
   name           String?
 
+  servers        Server[]
+  members        Member[]
+  channels       Channel[]
+
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
+
+model Server {
+  id             String   @id @default(uuid())
+  name           String
+  image          String   @db.Text
+  inviteCode     String   @unique
+
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  members        Member[]
+  channels       Channel[]
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+}
+
+enum MemberRole {
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+model Member {
+  id             String     @id @default(uuid())
+  role           MemberRole @default(GUEST)
+
+  userId         String
+  user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  serverId       String
+  server         Server     @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([serverId])
+}
+
+enum ChannelType {
+  TEXT
+  AUDIO
+  VIDEO
+}
+
+model Channel {
+  id             String       @id @default(uuid())
+  name           String
+  type           ChannelType  @default(TEXT)
+
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  serverId       String
+  server         Server       @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([serverId])
+}
+
+
