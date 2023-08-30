@@ -25,12 +25,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { FileUpload } from "../file-upload";
+import { toast } from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(1, {
     message: "Server name is required.",
   }),
-  imageUrl: z.string().min(1, {
+  image: z.string().min(1, {
     message: "Server image is required.",
   }),
 });
@@ -48,13 +50,26 @@ export const InitialModal = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      imageUrl: "",
+      image: "",
     },
   });
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {};
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      console.log("MODAL: ", values);
+      await axios.post("/api/servers", values);
+
+      form.reset();
+      toast.success("Server has been created!");
+      router.refresh();
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong.");
+    }
+  };
 
   if (!isMounted) {
     return null;
@@ -62,7 +77,7 @@ export const InitialModal = () => {
 
   return (
     <Dialog open>
-      <DialogContent className="p-0 overflow-hidden">
+      <DialogContent className="p-0 overflow-hidden max-w-[375px]">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-xl font-bold">
             Customize your server
@@ -75,6 +90,23 @@ export const InitialModal = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="space-y-8 px-6">
+              <div className="flex items-center justify-start text-center">
+                <FormField
+                  control={form.control}
+                  name="image"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <FileUpload
+                          endpoint="serverImage"
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name="name"
@@ -97,7 +129,11 @@ export const InitialModal = () => {
               />
             </div>
             <DialogFooter className="px-6 py-4">
-              <Button variant="primary" disabled={isLoading}>
+              <Button
+                variant="primary"
+                disabled={isLoading}
+                onClick={form.handleSubmit(onSubmit)}
+              >
                 Create
               </Button>
             </DialogFooter>
