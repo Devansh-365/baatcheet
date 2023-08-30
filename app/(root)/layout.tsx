@@ -1,12 +1,13 @@
-import React from "react";
+import SideMenu from "@/components/side-menu";
+import SideMenuSkeleton from "@/components/side-menu/side-menu-skeleton";
+import React, { Suspense } from "react";
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-    
   return (
     <div className="h-full">
-      {/* <div className="hidden md:flex h-full w-[72px] z-30 flex-col fixed inset-y-0">
-        <NavigationSidebar />
-      </div> */}
+      <Suspense fallback={<SideMenuSkeleton />}>
+        <SideMenu />
+      </Suspense>
       <main className="md:pl-[72px] h-full">{children}</main>
     </div>
   );
