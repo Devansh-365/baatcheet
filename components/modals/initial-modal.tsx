@@ -89,7 +89,7 @@ export const InitialModal = () => {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="space-y-8 px-6">
+            <div className="space-y-6 px-6">
               <div className="flex items-center justify-start text-center">
                 <FormField
                   control={form.control}
