@@ -15,7 +15,7 @@ const SideMenu = async ({
     return redirect(`/sign-in`);
   }
 
-  await delay(10000);
+  await delay(2000);
 
   const servers = await prismadb.server.findMany({
     where: {
