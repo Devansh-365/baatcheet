@@ -1,10 +1,8 @@
 "use client";
 
-import axios from "axios";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
 
 import {
   Card,
@@ -27,6 +25,8 @@ import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "react-hot-toast";
+import Link from "next/link";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 const formSchema = z.object({
   email: z.string().email().min(1, {
@@ -126,14 +126,22 @@ const SignInPage = () => {
                 )}
               />
             </div>
-            <CardFooter className="py-4">
-              <Button
-                variant="primary"
-                className="ml-auto"
-                disabled={isLoading}
-              >
+            <CardFooter className="py-4 flex flex-col">
+              <Button variant="primary" className="w-full" disabled={isLoading}>
+                {isLoading && (
+                  <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                )}
                 Sign In
               </Button>
+              <p className="px-8 mt-3 text-center text-xs text-[#72767D]">
+                {`Don't have an account? `}
+                <Link
+                  href={`/sign-up`}
+                  className="text-[#3BA55C] hover:text-[#3BA55C]/90 underline underline-offset-4"
+                >
+                  Sign Up
+                </Link>
+              </p>
             </CardFooter>
           </form>
         </Form>
