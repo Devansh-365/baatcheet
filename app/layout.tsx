@@ -5,6 +5,7 @@ import { Inter, Open_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ToastProvider } from "@/components/providers/toast-provider";
 import { Analytics } from "@vercel/analytics/react";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
           storageKey="discord-theme"
         >
           <ToastProvider />
+          <ModalProvider />
           {children}
           <Analytics />
         </ThemeProvider>
