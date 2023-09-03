@@ -45,6 +45,28 @@ Connect Better with Baatcheet: Real-time Chats, Video Calls, and Dynamic Channel
 
 Try the App: [Baatcheet](https://baatcheet.vercel.app/)
 
+## 🧐 Features
+
+Baatcheet comes up with a whole bunch of amazing features to provide you the best experience, Here're some of our best features.
+
+- **Real-time messaging using Socket.io**
+- **Send attachments as messages using UploadThing**
+- **Delete & Edit messages in real time for all users**
+- **Loading UI**
+- **Create Text, Audio and Video call Channels**
+- **1:1 conversation between members**
+- **1:1 video calls between members**
+- **Member management (Kick, Role change Guest / Moderator)**
+- **Unique invite link generation & full working invite system**
+- **Infinite loading for messages in batches of 10 (tanstack/query)**
+- **Server creation and customization**
+- **Beautiful UI using TailwindCSS and ShadcnUI**
+- **Full responsivity and mobile UI**
+- **Websocket fallback: Polling with alerts**
+- **ORM using Prisma**
+- **Database using Supabase**
+- **Authentication with Next-Auth**
+
 ## 🛡️ License
 
 This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
